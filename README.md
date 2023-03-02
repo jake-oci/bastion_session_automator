@@ -28,8 +28,11 @@ Download private key, and add it to the .oci folder. You will reference the full
 python3 bastion_session_automator.py -b BASTION_OCID
 
 Optional Commands
---run-forever: Create new bastion sessions forever, and connect to them. There will be a 5-10 second pause in connectivity between sessions. 
---local-connections or -l: Create a local forwarding session to an OCI instance using the private IP and destination port you want to connect to.
+--run-forever: 
+Create new bastion sessions forever, and connect to them. There will be a 5-10 second pause in connectivity between sessions. 
+
+--local-connections or -l: 
+Create a local forwarding session to an OCI instance using the private IP and destination port you want to connect to.
 
 An example of a full command. This will connect to the bastion, run the script indefinitely, and create local forwarding sessions to 10.0.0.100 for RDP (port 3389) and 10.0.101.45 for SSH (port 22)
 
