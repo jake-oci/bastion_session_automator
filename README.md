@@ -1,14 +1,5 @@
 This script was Authored by Jake Bloom OCI Principal Network Solution Architect. This is not an Oracle supported script. No liability from this script will be assumed and support is best effort.
 
-# **Quickstart**
-
-***Make sure to read the installation steps to read the "**Prerequisites**" section!***
-
-After the Bastion Host is deployed, collect the OCID and run the python script. The script builds a SOCKS5 tunnel (HTTP traffic and SOCKS5 aware traffic). I also have a test instance that I want to SSH into, so I add the "-l" paramter to set up local forwarding.
-
-**example:** python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.amaaaaaac3adhhqaozfw4lv7rxtns3spojfqwf3ys3mipnn5jnahu5e7rbmq -l 10.0.1.42 22
-
-**If you don't quite understand how SOCKS5 or Local-Forwarding works, this script does a lot of the backend work and I've described how to make it useful for you in the "Desktop Usage" section of this README.**
 
 # **Prerequisites**
 
@@ -36,6 +27,16 @@ After the Bastion Host is deployed, collect the OCID and run the python script. 
     - CIDR block allow list
         - "0.0.0.0/0" if you are testing.
         - "1.0.0.0/32" or another fake IP if you want the script to automatically update the allow list based on the user's public IP.
+     
+# **Quickstart**
+
+***Make sure to read the installation steps to read the "**Prerequisites**" section!***
+
+After the Bastion Host is deployed, collect the OCID and run the python script. The script builds a SOCKS5 tunnel (HTTP traffic and SOCKS5 aware traffic). I also have a test instance that I want to SSH into, so I add the "-l" paramter to set up local forwarding.
+
+**example:** python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.amaaaaaac3adhhqaozfw4lv7rxtns3spojfqwf3ys3mipnn5jnahu5e7rbmq -l 10.0.1.42 22
+
+**If you don't quite understand how SOCKS5 or Local-Forwarding works, this script does a lot of the backend work and I've described how to make it useful for you in the "Desktop Usage" section of this README.**
 
 # **Features**
 
