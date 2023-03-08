@@ -1,6 +1,7 @@
 This script was Authored by Jake Bloom OCI Principal Network Solution Architect. This is not an Oracle supported script. No liability from this script will be assumed and support is best effort.
 
-# bastion_session_automator
+# bastion\_session\_automator
+
 Automate OCI's Bastion Service For A Cross-Platform Pseudo VPN
 
 # Prerequisites
@@ -103,8 +104,6 @@ description: This will connect to the bastion, run the script indefinitely, and 
 Variables can also be hard-set in the script if you choose not to run them through the CLI. CLI switches will override the parameters that are set within the script.
 
 # **Desktop Usage**
-
-## This Script Supports 2 Connection Types:
 
 ## **SOCKS5**
 
