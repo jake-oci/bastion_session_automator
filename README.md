@@ -8,10 +8,11 @@ Automate OCI's Bastion Service For A Cross-Platform Pseudo VPN
 
 **Install Script**
 
-- git clone https://github.com/jake-oci/bastion_session_automator/
-    - No git on your desktop? Copy the **bastion\_session\_automator.py** file to a memorable place.
+**\- git clone [https://github.com/jake-oci/bastion\_session\_automator/](https://github.com/jake-oci/bastion_session_automator/)**
+\- No git on your desktop? Copy the **bastion\_session\_automator.py** file to a memorable place.
+
 - Install the OCI SDK
-    - Run "pip3 install oci" for a global installation
+    - Run **"pip3 install oci"** for a global installation
     - Go to https://pypi.org/project/oci/ for more details and installation methods.
 
 **Create an API key**
@@ -28,11 +29,11 @@ Automate OCI's Bastion Service For A Cross-Platform Pseudo VPN
         - If security lists/NSG's all for it, this Bastion will be able to reach everything in the VCN it's deployed to
     - Check "Enable FQDN Support and SOCKS5"
     - CIDR block allow list
-        - "0.0.0.0/0" if you are testing.
+        - "0.0.0.0/0" if you are doing a quick test in non-production.
         - "1.0.0.0/32" or another fake IP if you want the script to automatically update the allow list based on the user's public IP.
 
-
 ### Run it!
+
 Collect the Bastion Host OCID and run the python script.
 
 **example:** python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.123 -l 10.0.1.42 22
@@ -43,23 +44,16 @@ Collect the Bastion Host OCID and run the python script.
 
 # **Features**
 
-### **Fastest Connection to OCI**
+### **Bastion Session Timeout Worries -- Gone**
 
-- Start a new desktop connection to OCI in less than 10 seconds. Purely automated connection to your OCI Infrastructure.
-    
-- Overcomes the session timeout problem in 2 ways.
-    
-    1.  Running the script will build a new session in less than 10 seconds, an order of magnitude faster than going through the UI.
-    2.  There is an option to run the script indefinitely (-r on the CLI) rebuilding inactive Bastion Sessions until the script is closed, or a failure is detected.
+- Running the script will build a new session in less than 10 seconds, an order of magnitude faster than going through the UI.
+- There is an option to run the script indefinitely (-r on the CLI) rebuilding inactive Bastion Sessions until the script is closed, or a failure is detected.
 
 ### **Practical Security**
 
-- There are 2 distinct benefits on enhancing security for Bastion Sessions.
-    
-    - An Ephemeral RSA key-pair is created every time you run the script, which means you never use the same key to encrypt your traffic over the internet.
-    - No more 0.0.0.0/0 in your access list because your users are coming from dynamic public IP space! Automatically adds your public IP address to the Bastion Host CIDR allow-list making it easy to follow best practices.
-- **NOTE:** If the script detects a 0.0.0.0/0 in the allow list, it will assume you don't want to modify the allow list and bypass this feature.
-    
+- An Ephemeral RSA key-pair is build every time you run the script. You never use the same key to encrypt your traffic over the internet.
+- Users coming from dynamic public IP space don't require a 0.0.0.0/0 access list! The script automatically adds your public IP address to the Bastion Host CIDR allow-list making it easy to follow best practices and programmatically limit Bastion Access from an IP level.
+    - **NOTE:** If the script detects a 0.0.0.0/0 in the allow list, it will assume you don't want to modify the allow list and bypass this feature.
 
 ### **Simple VPN**
 
@@ -104,7 +98,6 @@ python3 bastion\_session\_automator.py -b BASTION_OCID
 Variables can also be hard-set in the script if you choose not to run them through the CLI. CLI switches will override the parameters that are set within the script.
 
 # **Desktop Usage**
-
 
 ## **SOCKS5**
 
