@@ -45,7 +45,7 @@ Collect the Bastion Host OCID and run the python script.
 
 ### **Fastest Connection to OCI**
 
-- Start a new connection to OCI in less than 10 seconds. Purely automated connection to your OCI Infrastructure.
+- Start a new desktop connection to OCI in less than 10 seconds. Purely automated connection to your OCI Infrastructure.
     
 - Overcomes the session timeout problem in 2 ways.
     
