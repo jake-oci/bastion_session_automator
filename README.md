@@ -10,7 +10,7 @@ example: python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-
 
 **If you don't quite understand how SOCKS5 or Local-Forwarding works, this script does a lot of the backend work and I've described how to make it useful for you in the "Desktop Usage" section of this README.**
 
-# **Prerequisites  **
+# **Prerequisites**
 
 **Install Script**
 
