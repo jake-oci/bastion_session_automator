@@ -8,7 +8,7 @@ Automate OCI's Bastion Service For A Cross-Platform Pseudo VPN
 
 **Install Script**
 
-- git clone [https://github.com/jake-oci/bastion\_session\_automator/](https://github.com/jake-oci/bastion_session_automator/)
+- git clone [https://github.com/jake-oci/bastion\_session\_automator/]
     - No git on your desktop? Copy the **bastion\_session\_automator.py** file to a memorable place.
 - Install the OCI SDK
     - Run "pip3 install oci" for a global installation
