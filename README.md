@@ -8,7 +8,7 @@ Automate OCI's Bastion Service For A Cross-Platform Pseudo VPN
 
 **Install Script**
 
-- git clone https://github.com/jake-oci/bastion\_session\_automator/
+- git clone https://github.com/jake-oci/bastion_session_automator/
     - No git on your desktop? Copy the **bastion\_session\_automator.py** file to a memorable place.
 - Install the OCI SDK
     - Run "pip3 install oci" for a global installation
@@ -63,14 +63,14 @@ Collect the Bastion Host OCID and run the python script.
 
 ### **Simple VPN**
 
-- Dozens of users can use this script to connect into common OCI infrastructure if you account for oversubscription. The Bastion Host is capable of 20 concurrent sessions.
+- Dozens of users can use this script to connect into common OCI infrastructure using the same Bastion Host if you account for oversubscription. The Bastion Host is capable of 20 concurrent sessions.
 
 ### **Cloud Native**
 
 - Bastion is a free service included with your OCI tenancy
 - Bastion integrates with OCI IAM.
-    - Restrictions can be made based on the user's role
-    - Removing a user from the IAM policy will revoke their ability to connect to OCI.
+    - Restrictions can be made based on the user's role and group membership
+    - Removing a user from the IAM policy will revoke their ability to connect to OCI and create new Bastion Sessions.
 
 ### **Other Benefits**
 
@@ -108,15 +108,15 @@ Variables can also be hard-set in the script if you choose not to run them throu
 
 ## **SOCKS5**
 
-The script will always create a SOCKS5 connection, as it's foundational both to both of the connection types. When you run the script, you will see an output similar such as this.
+The script will always create a SOCKS5 connection, as it's foundational both to both SOCKS5 and Local Forwarding connection types. When you run the script, you will see an output similar such as this.
 
 **SOCKS5 PROXY &lt;--MAPPED TO--&gt; localhost:25844**
 
-localhost:25844 is where you need to set up your SOCKS5 endpoint, to forward traffic to OCI.
+localhost:25844 is where you need to set up your SOCKS5 endpoint to forward traffic to OCI over the Bastion Session.
 
 There are two ways to test this.
 
-1.  Go to your web browser and add a SOCKS5 configuration. Add the localhost:portnumber (localhost:25844) that the script provides and optionally add the ability to tunnel DNS over SOCKS5. Now all HTTP applications in OCI are accessible directly from your client using the IP address or DNS name and port number!
+1.  Go to your web browser and configure a SOCKS5 proxy configuration. Add the localhost:portnumber (localhost:25844) that the script provides and optionally add the ability to tunnel DNS over SOCKS5. Now all HTTP applications in OCI are accessible directly from your client using the assigned OCI IP address or DNS name (and port number if it's not 80/443)!
 2.  For cURL capable shells, run "curl --socks5 localhost:25844 ifconfig.me". The output will show the public IP address over the Bastion Host instead of the public IP address of your local ISP.
 
 ## **Local Forwarding**
