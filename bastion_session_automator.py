@@ -4,7 +4,7 @@ import argparse, socket, hashlib, os, tempfile, random, time, atexit, signal, as
 #user_bastion_host_ocid="ocid1.bastion.oc1.us-chicago-1.amaaaaaac3adhhqaozfw4lv7rxtns3spojfqwf3ys3mipnn5jnahu5e7rbmq" #OCID of the Bastion Host you want to create sessions with on OCI.
 
 ###Optional Variables###
-#user_session_ttl=1800 #30 Minutes by default, and gives a good balance for allowing stale sessions to close and allow other users to connect to the Bastion host.
+#user_session_ttl=1800 #60 Minutes by default, and gives a good balance for allowing stale sessions to close and allow other users to connect to the Bastion host.
 #user_local_connections=[("10.0.0.254", 8000),("10.0.1.130", 3389),("10.0.0.3", 21),("10.0.0.254", 22)] #Set OCI_PRIVATE_IP and OCI_DEST_PORT for non-SOCKS5 applications to do local forwarding.
 ##########################
 
@@ -22,7 +22,7 @@ import argparse, socket, hashlib, os, tempfile, random, time, atexit, signal, as
 logging.getLogger('asyncio').setLevel(logging.ERROR)
 
 #CLI Help Commands and Options
-CLI=argparse.ArgumentParser(description= "Usage: python3 bastion_session_automator.py -b 'bastionhostOCID' -l 'OCI_PRIVATE_IP_1 PORT_1 -l OCI_PRIVATE_IP_2 PORT_2 -r")
+CLI=argparse.ArgumentParser(description= "Usage: python3 bastion_session_automator.py -b BASTION_HOST_OCID -l OCI_PRIVATE_IP_1 DESTINATION_PORT_1 -l OCI_PRIVATE_IP_2 DESTINATION PORT_2 -r")
 CLI.add_argument("--bastion_ocid","-b", type=str,help="add your Bastion OCID")
 CLI.add_argument("--run_forever", "-r", action='store_true',help="Set this flag to create bastion sessions indefinitely")
 CLI.add_argument("--local_connections", "-l", type=str, action="append", nargs="+",help="USAGE: -l OCI_PRIVATE_IP OCI_PORT")
@@ -136,8 +136,7 @@ def exit_buddy():
         user_local_connections
     except NameError:
         print("")
-        print("[Attention!]")
-        print("Uncomment the 'local_connections' variable or specify '-l' from the CLI to pass Non-SOCKS5 traffic.")
+        print("[Attention!] Uncomment the 'local_connections' variable or specify '-l' from the CLI to pass Non-SOCKS5 traffic.")
     cleanup()
     print("EXITING -- Bastion session is cleaned up and SSH tunnels are terminated. Run the script again to reconnect.")
     raise SystemExit
@@ -167,7 +166,7 @@ async def run_cmd(uniq,bastionocid):
 async def subprocess(cmds,bastionocid):
     subprocess_errors=0
     session_ocid=""
-    while subprocess_errors<10:
+    while subprocess_errors<15:
         if bastionocid == session_ocid:
             try:
                 checkin=bastion_client.get_session(session_id=bastionocid)
@@ -186,8 +185,9 @@ async def subprocess(cmds,bastionocid):
         if bastionocid != session_ocid:    
             session_ocid=bastionocid
             subprocess_errors=0
-    if subprocess_errors==10:
+    if subprocess_errors==15:
         print("ERROR! -- There is a configuration issue with SSH. I recommend resolving the SSH issue outside of the script before continue to use it. Here is the error.")
+        print("If you are seeing this error after long 'run forever' sessions, run the script again to restart.")
         process = await asyncio.create_subprocess_exec(*cmds,
             stdout=asyncio.subprocess.PIPE, 
             stderr=asyncio.subprocess.PIPE)
@@ -309,6 +309,7 @@ if bastion_host.data.dns_proxy_status == "DISABLED":
     raise SystemExit
 
 get_pubip_list=['https://v4.ident.me', 'https://ifconfig.me/', 'http://myip.dnsomatic.com']
+url_set=None
 for url in get_pubip_list:
     try:
         request=urllib.request.urlopen(url)
@@ -316,11 +317,15 @@ for url in get_pubip_list:
             pub_ip=(request.read().decode('utf8'))
             if ipaddress.IPv4Address(pub_ip):
                 client_public_ip=pub_ip
+                url_set=True
                 break
     except Exception as e:
+        print(e)
         print("Unable to Get Public IP Address From {}".format(url))
         print("Trying Other URLs")
-        print(e)
+if url_set is None:
+    print("ERROR -- Unable to determine your public IP address. Exiting the script.")
+    raise SystemExit
 
 #Allow List Manager
 #Appends your public IP Address to the ALLOW list if you're not using an allow any (0.0.0.0/0) network.
@@ -365,7 +370,7 @@ if len(active_bastion_sessions) >= int(bastion_host.data.max_sessions_allowed*.8
     print("Bastion Host -- Session Count is Nearing the Limit of the Bastino Host -- {}/{}".format(len(active_bastion_sessions),bastion_host.data.max_sessions_allowed))
     print("Bastion Host -- Consider adding more capacity by creating another Bastion Host.")
 if len(active_bastion_sessions) == bastion_host.data.max_sessions_allowed:
-    print("astion Host -- Bastion Host is at capacity - ACTIVE{}/TOTAL{} SESSIONS. A session needs to be freed up before you can connect to this Bastion.".format(len(active_bastion_sessions),bastion_host.data.max_sessions_allowed))
+    print("Bastion Host -- Bastion Host is at capacity - ACTIVE{}/TOTAL{} SESSIONS. A session needs to be freed up before you can connect to this Bastion.".format(len(active_bastion_sessions),bastion_host.data.max_sessions_allowed))
     raise SystemExit
 print("Bastion Host -- {} Total Active Sessions = {}".format(bastion_host.data.name.upper(),len(active_bastion_sessions)))
 
@@ -457,12 +462,10 @@ try:
                             access_still_allowed=True
                             break
                     if access_still_allowed is None:
-                        print("ERROR -- Ending this session, since the CIDR allowlist does not your public IP anymore.")
-                        print("INFO -- Rerunning this script will update the CIDR list with your public IP address")
+                        print("ERROR -- Ending this session since the Bastion Host's CIDR allowlist does not allow your public IP.")
+                        print("INFO -- Rerunning this script to update the CIDR list with your public IP address")
                         raise SystemExit
                     bastion_session_ocid=create_bastion_session()
-            except RuntimeError:
-                raise SystemExit
             except KeyboardInterrupt:
                 runtime=(-1*(starttime-time.time()))
                 if runtime> 60:
