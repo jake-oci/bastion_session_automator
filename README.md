@@ -14,7 +14,7 @@ example: python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-
 
 **Install Script**
 
-- git clone https://github.com/jake-oci/bastion\_session\_automator/
+- git clone [https://github.com/jake-oci/bastion\_session\_automator/](https://github.com/jake-oci/bastion_session_automator/)
     - No git on your desktop? Copy the **bastion\_session\_automator.py** file to a memorable place.
 - Install the OCI SDK
     - Run "pip3 install oci" for a global installation
@@ -39,7 +39,7 @@ example: python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-
 
 # **Features**
 
-**Fastest Connection to OCI**
+## **Fastest Connection to OCI**
 
 - Start a new connection to OCI in less than 10 seconds. Purely automated connection to your OCI Infrastructure.
 - Overcomes the session timeout problem in 2 ways.
@@ -47,7 +47,7 @@ example: python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-
 1.  1.  Running the script will build a new session in less than 10 seconds, an order of magnitude faster than going through the UI.
     2.  There is an option to run the script indefinitely (-r on the CLI) rebuilding inactive Bastion Sessions until the script is closed, or a failure is detected.
 
-**Practical Security**
+## **Practical Security**
 
 - There are 2 distinct benefits on enhancing security for Bastion Sessions.
     
@@ -55,29 +55,31 @@ example: python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-
         - No more 0.0.0.0/0 in your access list because your users are coming from dynamic public IP space! Automatically adds your public IP address to the Bastion Host CIDR allow-list making it easy to follow best practices.
             - NOTE: If the script detects a 0.0.0.0/0 in the allow list, it will assume you don't want to modify the allow list and bypass this feature.
 
-**Simple VPN**
+## **Simple VPN**
 
 - Dozens of users can use this script to connect into common OCI infrastructure if you account for oversubscription. The Bastion Host is capable of 20 concurrent sessions.
 
-**Cloud Native**
+## **Cloud Native**
 
 - Bastion is a free service included with your OCI tenancy
 - Bastion integrates with OCI IAM.
     - Restrictions can be made based on the user's role
     - Removing a user from the IAM policy will revoke their ability to connect to OCI.
 
-**Other Benefits**
+## **Other Benefits**
 
-- **Private DNS Resolution** \- Take full advantage of OCI's private DNS by tunneling client DNS traffic to an OCI resolver. 
+- **Private DNS Resolution** \- Take full advantage of OCI's private DNS by tunneling client DNS traffic to an OCI resolver.
 - **Multi-Region Aware** - Connect to a Bastion anywhere in the world and the script will update your configuration profile to match that region.
-- **Crossplatform -** Even Windows has SSH in Powershell. All Operating Systems Welcome. 
-- **Scripts can be run simultaneously** \- Connect to multiple Bastion hosts at the same time. 
+- **Crossplatform -** Even Windows has SSH in Powershell. All Operating Systems Welcome.
+- **Scripts can be run simultaneously** \- Connect to multiple Bastion hosts at the same time.
 
 # Script Usage
 
+### USAGE:
+
 python3 bastion\_session\_automator.py -b BASTION_OCID
 
-**CLI Switches:**
+### **CLI Switches:**
 
 -b/--bastion_ocid: (Required) The Bastion Host OCID
 
@@ -85,19 +87,19 @@ python3 bastion\_session\_automator.py -b BASTION_OCID
 
 -l/--local-connections: (Optional) Create a local forwarding session to an OCI instance using the private IP and destination port you want to connect to. (For nonSOCKS5 traffic such as RDP)
 
-**Example With Optional Commands:**
+### **Example With Optional Commands:**
 
 example: python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.amaaaaaac3adhhqaozfw4lv7rxtns3spojfqwf3ys3mipnn5jnahu5e7rbmq -r -l 10.0.0.100 3389 -l 10.0.101.45 22
 
 description: This will connect to the bastion, run the script indefinitely, and create local forwarding sessions to 10.0.0.100 for RDP (port 3389) and 10.0.101.45 for SSH (port 22)
 
-**Notes on Usage:**
+### **Notes on Usage:**
 
 Variables can also be hard-set in the script if you choose not to run them through the CLI. CLI switches will override the parameters that are set within the script.
 
 # Desktop Usage
 
-## This script supports 2 connection types:
+## This Script Supports 2 Connection Types:
 
 ## **SOCKS5**
 
@@ -122,7 +124,7 @@ Here are two working examples.
     - example: python3 bastion\_session\_automator.py -b BASTION_OCID -l 10.100.0.240 3389
         - The script will map 10.100.0.240 3389 to a localhost and port number, like below:
             - **10.100.0.240:3389 &lt;--MAPPED TO--&gt; localhost:41677**
-        - To RDP to this OCI instance, all you need to do is use "localhost" as the hostname/ipaddress and 41677 as the port number. 
+        - To RDP to this OCI instance, all you need to do is use "localhost" as the hostname/ipaddress and 41677 as the port number.
 2.  SSH into OCI IP 10.100.0.10 22
     - example: python3 bastion\_session\_automator.py -b BASTION_OCID -l 10.100.0.10 22
         - The script will map 10.100.0.10 22 to a localhost and port number, like below:
