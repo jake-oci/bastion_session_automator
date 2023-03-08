@@ -39,7 +39,7 @@ After the Bastion Host is deployed, collect the OCID and run the python script. 
 
 # **Features**
 
-## **Fastest Connection to OCI**
+### **Fastest Connection to OCI**
 
 - Start a new connection to OCI in less than 10 seconds. Purely automated connection to your OCI Infrastructure.
     
@@ -48,7 +48,7 @@ After the Bastion Host is deployed, collect the OCID and run the python script. 
     1.  Running the script will build a new session in less than 10 seconds, an order of magnitude faster than going through the UI.
     2.  There is an option to run the script indefinitely (-r on the CLI) rebuilding inactive Bastion Sessions until the script is closed, or a failure is detected.
 
-## **Practical Security**
+### **Practical Security**
 
 - There are 2 distinct benefits on enhancing security for Bastion Sessions.
     
@@ -57,18 +57,18 @@ After the Bastion Host is deployed, collect the OCID and run the python script. 
 - **NOTE:** If the script detects a 0.0.0.0/0 in the allow list, it will assume you don't want to modify the allow list and bypass this feature.
     
 
-## **Simple VPN**
+### **Simple VPN**
 
 - Dozens of users can use this script to connect into common OCI infrastructure if you account for oversubscription. The Bastion Host is capable of 20 concurrent sessions.
 
-## **Cloud Native**
+### **Cloud Native**
 
 - Bastion is a free service included with your OCI tenancy
 - Bastion integrates with OCI IAM.
     - Restrictions can be made based on the user's role
     - Removing a user from the IAM policy will revoke their ability to connect to OCI.
 
-## **Other Benefits**
+### **Other Benefits**
 
 - **Private DNS Resolution** \- Take full advantage of OCI's private DNS by tunneling client DNS traffic to an OCI resolver.
 - **Multi-Region Aware** - Connect to a Bastion anywhere in the world and the script will update your configuration profile to match that region.
