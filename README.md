@@ -1,6 +1,5 @@
 This script was Authored by Jake Bloom OCI Principal Network Solution Architect. This is not an Oracle supported script. No liability from this script will be assumed and support is best effort.
 
-
 # **Prerequisites**
 
 **Install Script**
@@ -27,7 +26,7 @@ This script was Authored by Jake Bloom OCI Principal Network Solution Architect.
     - CIDR block allow list
         - "0.0.0.0/0" if you are testing.
         - "1.0.0.0/32" or another fake IP if you want the script to automatically update the allow list based on the user's public IP.
-     
+
 # **Quickstart**
 
 ***Make sure to read the installation steps to read the "**Prerequisites**" section!***
@@ -92,7 +91,7 @@ python3 bastion\_session\_automator.py -b BASTION_OCID
 
 ### **Example With Optional Commands:**
 
-example: python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.amaaaaaac3adhhqaozfw4lv7rxtns3spojfqwf3ys3mipnn5jnahu5e7rbmq -r -l 10.0.0.100 3389 -l 10.0.101.45 22
+**example:** python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.amaaaaaac3adhhqaozfw4lv7rxtns3spojfqwf3ys3mipnn5jnahu5e7rbmq -r -l 10.0.0.100 3389 -l 10.0.101.45 22
 
 description: This will connect to the bastion, run the script indefinitely, and create local forwarding sessions to 10.0.0.100 for RDP (port 3389) and 10.0.101.45 for SSH (port 22)
 
@@ -124,12 +123,12 @@ Some applications are not SOCKS5 aware. For these types of applications, a local
 Here are two working examples.
 
 1.  If I need to get to an RDP server with an OCI IP address of 10.100.0.240, you will run this command in the script. 10.100.0.240 is the OCI IP, and 3389 is the default port for RDP.
-    - example: python3 bastion\_session\_automator.py -b BASTION_OCID -l 10.100.0.240 3389
+    - **example:** python3 bastion\_session\_automator.py -b BASTION_OCID -l 10.100.0.240 3389
         - The script will map 10.100.0.240 3389 to a localhost and port number, like below:
             - **10.100.0.240:3389 &lt;--MAPPED TO--&gt; localhost:41677**
         - To RDP to this OCI instance, all you need to do is use "localhost" as the hostname/ipaddress and 41677 as the port number.
 2.  SSH into OCI IP 10.100.0.10 22
-    - example: python3 bastion\_session\_automator.py -b BASTION_OCID -l 10.100.0.10 22
+    - **example:** python3 bastion\_session\_automator.py -b BASTION_OCID -l 10.100.0.10 22
         - The script will map 10.100.0.10 22 to a localhost and port number, like below:
             - **10.100.0.240:3389 &lt;--MAPPED TO--&gt; localhost:26867**
         - To SSH into to this OCI instance run the following command. Notice that -p specify's the mapped port, and localhost maps the OCI IP address.
