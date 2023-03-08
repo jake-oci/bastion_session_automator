@@ -31,9 +31,9 @@ Automate OCI's Bastion Service For A Cross-Platform Pseudo VPN
         - "0.0.0.0/0" if you are testing.
         - "1.0.0.0/32" or another fake IP if you want the script to automatically update the allow list based on the user's public IP.
 
-Collect the Bastion Host OCID and run the python script.
 
 ### Run it!
+Collect the Bastion Host OCID and run the python script.
 
 **example:** python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.123 -l 10.0.1.42 22
 
