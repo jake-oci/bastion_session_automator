@@ -97,13 +97,14 @@ python3 bastion\_session\_automator.py -b BASTION_OCID
 
 **example:** python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.amaaaaaac3adhhqaozfw4lv7rxtns3spojfqwf3ys3mipnn5jnahu5e7rbmq -r -l 10.0.0.100 3389 -l 10.0.101.45 22
 
-description: This will connect to the bastion, run the script indefinitely, and create local forwarding sessions to 10.0.0.100 for RDP (port 3389) and 10.0.101.45 for SSH (port 22)
+**description:** This will connect to the bastion, run the script indefinitely, and create local forwarding sessions to 10.0.0.100 for RDP (port 3389) and 10.0.101.45 for SSH (port 22)
 
 ### **Notes on Usage:**
 
 Variables can also be hard-set in the script if you choose not to run them through the CLI. CLI switches will override the parameters that are set within the script.
 
 # **Desktop Usage**
+
 
 ## **SOCKS5**
 
