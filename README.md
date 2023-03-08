@@ -31,15 +31,13 @@ Automate OCI's Bastion Service For A Cross-Platform Pseudo VPN
         - "0.0.0.0/0" if you are testing.
         - "1.0.0.0/32" or another fake IP if you want the script to automatically update the allow list based on the user's public IP.
 
-# **Quickstart**
+Collect the Bastion Host OCID and run the python script. 
 
-***Make sure to read the installation steps to read the "**Prerequisites**" section!***
+**example:** python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.123 -l 10.0.1.42 22
 
-After the Bastion Host is deployed, collect the OCID and run the python script. The script builds a SOCKS5 tunnel (HTTP traffic and SOCKS5 aware traffic). I also have a test instance that I want to SSH into, so I add the "-l" paramter to set up local forwarding.
+**description** Now there is a SOCKS5 tunnel (HTTP traffic and SOCKS5 aware traffic), and a Local Forwarding session for SSH traffic to 10.0.1.42. 
 
-**example:** python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.amaaaaaac3adhhqaozfw4lv7rxtns3spojfqwf3ys3mipnn5jnahu5e7rbmq -l 10.0.1.42 22
-
-**If you don't quite understand how SOCKS5 or Local-Forwarding works, this script does a lot of the backend work and I've described how to make it useful for you in the "Desktop Usage" section of this README.**
+**Note:** If you don't understand how SOCKS5 or Local Forwarding works, I've described how to make it useful for you in the "**Desktop Usage**" section of this README.
 
 # **Features**
 
