@@ -6,7 +6,7 @@ This script was Authored by Jake Bloom OCI Principal Network Solution Architect.
 
 After the Bastion Host is deployed, collect the OCID and run the python script. The script builds a SOCKS5 tunnel (HTTP traffic and SOCKS5 aware traffic). I also have a test instance that I want to SSH into, so I add the "-l" paramter to set up local forwarding.
 
-example: python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.amaaaaaac3adhhqaozfw4lv7rxtns3spojfqwf3ys3mipnn5jnahu5e7rbmq -l 10.0.1.42 22
+**example:** python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-1.amaaaaaac3adhhqaozfw4lv7rxtns3spojfqwf3ys3mipnn5jnahu5e7rbmq -l 10.0.1.42 22
 
 **If you don't quite understand how SOCKS5 or Local-Forwarding works, this script does a lot of the backend work and I've described how to make it useful for you in the "Desktop Usage" section of this README.**
 
@@ -42,9 +42,10 @@ example: python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-
 ## **Fastest Connection to OCI**
 
 - Start a new connection to OCI in less than 10 seconds. Purely automated connection to your OCI Infrastructure.
+    
 - Overcomes the session timeout problem in 2 ways.
-
-1.  1.  Running the script will build a new session in less than 10 seconds, an order of magnitude faster than going through the UI.
+    
+    1.  Running the script will build a new session in less than 10 seconds, an order of magnitude faster than going through the UI.
     2.  There is an option to run the script indefinitely (-r on the CLI) rebuilding inactive Bastion Sessions until the script is closed, or a failure is detected.
 
 ## **Practical Security**
@@ -52,8 +53,9 @@ example: python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-
 - There are 2 distinct benefits on enhancing security for Bastion Sessions.
     
     - An Ephemeral RSA key-pair is created every time you run the script, which means you never use the same key to encrypt your traffic over the internet.
-        - No more 0.0.0.0/0 in your access list because your users are coming from dynamic public IP space! Automatically adds your public IP address to the Bastion Host CIDR allow-list making it easy to follow best practices.
-            - NOTE: If the script detects a 0.0.0.0/0 in the allow list, it will assume you don't want to modify the allow list and bypass this feature.
+    - No more 0.0.0.0/0 in your access list because your users are coming from dynamic public IP space! Automatically adds your public IP address to the Bastion Host CIDR allow-list making it easy to follow best practices.
+- **NOTE:** If the script detects a 0.0.0.0/0 in the allow list, it will assume you don't want to modify the allow list and bypass this feature.
+    
 
 ## **Simple VPN**
 
@@ -71,9 +73,9 @@ example: python3 bastion\_session\_automator.py -b ocid1.bastion.oc1.us-chicago-
 - **Private DNS Resolution** \- Take full advantage of OCI's private DNS by tunneling client DNS traffic to an OCI resolver.
 - **Multi-Region Aware** - Connect to a Bastion anywhere in the world and the script will update your configuration profile to match that region.
 - **Crossplatform -** Even Windows has SSH in Powershell. All Operating Systems Welcome.
-- **Scripts can be run simultaneously** \- Connect to multiple Bastion hosts at the same time.
+- **Scripts can be run simultaneously** \- Connect to multiple Bastion hosts from your desktop at the same time.
 
-# Script Usage
+# **Script Usage**
 
 ### USAGE:
 
@@ -97,7 +99,7 @@ description: This will connect to the bastion, run the script indefinitely, and 
 
 Variables can also be hard-set in the script if you choose not to run them through the CLI. CLI switches will override the parameters that are set within the script.
 
-# Desktop Usage
+# **Desktop Usage**
 
 ## This Script Supports 2 Connection Types:
 
@@ -112,11 +114,11 @@ localhost:25844 is where you need to set up your SOCKS5 endpoint, to forward tra
 There are two ways to test this.
 
 1.  Go to your web browser and add a SOCKS5 configuration. Add the localhost:portnumber (localhost:25844) that the script provides and optionally add the ability to tunnel DNS over SOCKS5. Now all HTTP applications in OCI are accessible directly from your client using the IP address or DNS name and port number!
-2.  For cURL capable shells, run "curl --socks5 localhost:25844 ifconfig.me". The output will show the public IP address
+2.  For cURL capable shells, run "curl --socks5 localhost:25844 ifconfig.me". The output will show the public IP address over the Bastion Host instead of the public IP address of your local ISP.
 
 ## **Local Forwarding**
 
-Some applications are not SOCKS5 aware. For these types of applications, a local forwarding session will need to be set up.Keep in mind for any localforwarding you will need to specific "localhost" as the IP address, and the random port number, since default ports will not be mapped.
+Some applications are not SOCKS5 aware. For these types of applications, a local forwarding session will need to be set up. Keep in mind for any localforwarding you will need to specific "localhost" as the IP address, and the random port number, since default ports will not be mapped.
 
 Here are two working examples.
 
